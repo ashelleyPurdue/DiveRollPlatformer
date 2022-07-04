@@ -28,6 +28,29 @@ config/icon="res://icon.png"
 
 enabled=PoolStringArray( "res://addons/ply/plugin.cfg" )
 
+[input]
+
+RightStickLeft={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":-1.0,"script":null)
+ ]
+}
+RightStickRight={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+ ]
+}
+RightStickUp={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":-1.0,"script":null)
+ ]
+}
+RightStickDown={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
+ ]
+}
+
 [physics]
 
 common/enable_pause_aware_picking=true
