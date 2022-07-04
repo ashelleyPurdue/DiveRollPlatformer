@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/ply/resources/ply_mesh.gd" type="Script" id=1]
 [ext_resource path="res://addons/ply/nodes/ply.gd" type="Script" id=2]
 [ext_resource path="res://addons/ply/debug_material.tres" type="Material" id=3]
+[ext_resource path="res://Scripts/RealInstaller.cs" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=2]
 surfaces/0 = {
@@ -28,6 +29,9 @@ face_edges = PoolIntArray( 11, 0, 4, 5, 6, 7 )
 face_surfaces = PoolIntArray( 0, 0, 0, 0, 0, 0 )
 
 [node name="Spatial" type="Spatial"]
+
+[node name="RealInstaller" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [node name="CSGMesh" type="CSGMesh" parent="."]
 mesh = SubResource( 2 )
