@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/ply/resources/ply_mesh.gd" type="Script" id=1]
 [ext_resource path="res://addons/ply/nodes/ply.gd" type="Script" id=2]
 [ext_resource path="res://addons/ply/debug_material.tres" type="Material" id=3]
+[ext_resource path="res://Scripts/RealInstaller.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/OrbitCamera.cs" type="Script" id=5]
+[ext_resource path="res://Prefabs/PlayerController.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ArrayMesh" id=2]
 surfaces/0 = {
@@ -29,6 +32,9 @@ face_surfaces = PoolIntArray( 0, 0, 0, 0, 0, 0 )
 
 [node name="Spatial" type="Spatial"]
 
+[node name="RealInstaller" type="Node" parent="."]
+script = ExtResource( 4 )
+
 [node name="CSGMesh" type="CSGMesh" parent="."]
 mesh = SubResource( 2 )
 material = ExtResource( 3 )
@@ -39,3 +45,8 @@ ply_mesh = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.82866 )
+script = ExtResource( 5 )
+TargetPath = NodePath("../PlayerController")
+
+[node name="PlayerController" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.457633, 0, -4.08862 )
