@@ -55,8 +55,6 @@ namespace DiveRollPlatformer
             if (_vAngleDeg < MIN_VANGLE_DEG)
                 _vAngleDeg = MIN_VANGLE_DEG;
 
-            GD.Print($"({_hAngleDeg}, {_vAngleDeg}");
-
             // Calculate the where the position would be (if we didn't zoom)
             Vector3 dir = SphericalToCartesian(_hAngleDeg, _vAngleDeg, 1);
             Vector3 pos = _target.GlobalTransform.origin + (dir * ORBIT_RADIUS);
