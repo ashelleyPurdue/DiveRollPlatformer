@@ -94,5 +94,13 @@ namespace DiveRollPlatformer
                 length * Mathf.Cos(angle)
             );
         }
+
+        public float GetHAngleDegInput()
+        {
+            var leftStick3D = GetLeftStickWorldSpace();
+            var leftStick2D = new Vector2(leftStick3D.x, leftStick3D.z);
+
+            return Mathf.Rad2Deg(leftStick2D.Angle());
+        }
     }
 }
