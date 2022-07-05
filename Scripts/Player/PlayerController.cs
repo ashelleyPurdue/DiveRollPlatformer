@@ -9,6 +9,7 @@ namespace DiveRollPlatformer
 
         public readonly PlayerState WalkState = new PlayerWalkState();
         public readonly PlayerState JumpState = new PlayerJumpState();
+        public readonly PlayerState FreeFallState = new PlayerFreeFallState();
 
         public IInputService Input {get; private set;}
 
