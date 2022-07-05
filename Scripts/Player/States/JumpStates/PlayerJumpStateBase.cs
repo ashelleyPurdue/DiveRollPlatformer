@@ -14,6 +14,7 @@ namespace DiveRollPlatformer
         public override void OnStateEnter()
         {
             Player.Velocity.y = JumpVelocity;
+            Player.DoubleJumpArmed = true;
 
             _jumpStartTime = Player.Time.PhysicsTime;
             _jumpReleased = false;
