@@ -2,30 +2,35 @@ using Godot;
 
 namespace DiveRollPlatformer
 {
-    public class PlayerJumpState : PlayerState
+    public class PlayerJumpState : PlayerAirbornStateBase
     {
+        protected override float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
+
         public override void OnStateEnter()
         {
             Player.Velocity.y = PlayerConstants.STANDARD_JUMP_VSPEED;
         }
 
-        public override void BeforeMove(float deltaTime)
-        {
-            // Apply gravity
-            // TODO: Use lower gravity when rising
-            Player.Velocity.y -= PlayerConstants.FREE_FALL_GRAVITY * deltaTime;
-            Player.Velocity.y = Mathf.Max(
-                Player.Velocity.y,
-                PlayerConstants.TERMINAL_VELOCITY_AIR
-            );
-
-            // TODO: Air strafing controls
-        }
-
         public override void AfterMove(float deltaTime)
         {
             if (Player.IsOnFloor())
+            {
                 Player.ChangeState(Player.WalkState);
+                return;
+            }
+
+            if (Player.Velocity.y <= 0)
+            {
+                Player.ChangeState(Player.FreeFallState);
+                return;
+            }
+
+            // Cut the jump short if the button was released on the way up
+            if (!Player.Input.JumpHeld)
+            {
+                Player.ChangeState(Player.JumpCutoffState);
+                return;
+            }
         }
     }
 }

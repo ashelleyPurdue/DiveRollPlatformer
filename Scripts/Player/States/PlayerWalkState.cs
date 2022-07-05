@@ -12,7 +12,10 @@ namespace DiveRollPlatformer
 
         public override void AfterMove(float deltaTime)
         {
-            // TODO: switch to falling state if not on the ground
+            if (!Player.IsOnFloor())
+            {
+                Player.ChangeState(Player.FreeFallState);
+            }
         }
     }
 }

@@ -7,12 +7,15 @@ namespace DiveRollPlatformer
     {
         public Vector3 Velocity;
 
+        public PlayerState CurrentState {get; private set;} = null;
+
         public readonly PlayerState WalkState = new PlayerWalkState();
+        public readonly PlayerState FreeFallState = new PlayerFreeFallState();
         public readonly PlayerState JumpState = new PlayerJumpState();
+        public readonly PlayerState JumpCutoffState = new PlayerJumpCutoffState();
+
 
         public IInputService Input {get; private set;}
-
-        private PlayerState _currentState = null;
 
         [Inject]
         public void InjectDependencies(
@@ -29,19 +32,19 @@ namespace DiveRollPlatformer
 
         public void ChangeState(PlayerState state)
         {
-            _currentState?.OnStateExit();
+            CurrentState?.OnStateExit();
 
-            _currentState = state;
-            _currentState.Player = this;
+            CurrentState = state;
+            CurrentState.Player = this;
 
-            _currentState.OnStateEnter();
+            CurrentState.OnStateEnter();
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            _currentState.BeforeMove(delta);
+            CurrentState.BeforeMove(delta);
             MoveAndSlide(Velocity, Vector3.Up);
-            _currentState.AfterMove(delta);
+            CurrentState.AfterMove(delta);
         }
     }
 }
