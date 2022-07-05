@@ -19,9 +19,16 @@ namespace DiveRollPlatformer
                 return;
             }
 
-            if (Player.Velocity.y <= 0 || !Player.Input.JumpHeld)
+            if (Player.Velocity.y <= 0)
             {
                 Player.ChangeState(Player.FreeFallState);
+                return;
+            }
+
+            // Cut the jump short if the button was released on the way up
+            if (!Player.Input.JumpHeld)
+            {
+                Player.ChangeState(Player.JumpCutoffState);
                 return;
             }
         }

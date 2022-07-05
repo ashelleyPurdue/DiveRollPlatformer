@@ -8,13 +8,7 @@ namespace DiveRollPlatformer
 
         public override void BeforeMove(float deltaTime)
         {
-            // Apply gravity
-            Player.Velocity.y -= Gravity * deltaTime;
-            Player.Velocity.y = Mathf.Max(
-                Player.Velocity.y,
-                PlayerConstants.TERMINAL_VELOCITY_AIR
-            );
-
+            ApplyGravity(deltaTime);
             // TODO: Air strafing controls
         }
 
@@ -25,6 +19,14 @@ namespace DiveRollPlatformer
                 Player.ChangeState(Player.WalkState);
                 return;
             }
+        }
+
+        protected void ApplyGravity(float deltaTime)
+        {
+            Player.Velocity.y -= Gravity * deltaTime;
+
+            if (Player.Velocity.y < PlayerConstants.TERMINAL_VELOCITY_AIR)
+                Player.Velocity.y = PlayerConstants.TERMINAL_VELOCITY_AIR;
         }
     }
 }
