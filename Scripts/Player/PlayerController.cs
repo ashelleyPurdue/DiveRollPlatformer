@@ -24,6 +24,7 @@ namespace DiveRollPlatformer
 
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
+        public float StateStartTime {get; private set;}
 
         public PlayerState CurrentState {get; private set;} = null;
 
@@ -57,6 +58,7 @@ namespace DiveRollPlatformer
             CurrentState = state;
             CurrentState.Player = this;
 
+            StateStartTime = Time.PhysicsTime;
             CurrentState.OnStateEnter();
         }
 

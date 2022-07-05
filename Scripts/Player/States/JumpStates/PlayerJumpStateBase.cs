@@ -26,7 +26,7 @@ namespace DiveRollPlatformer
             CutJumpShortIfReleased();
 
             ApplyGravity(Gravity, deltaTime);
-            // TODO: Air strafing
+            AirStrafingControls(deltaTime);
         }
 
         public override void AfterMove(float deltaTime)
