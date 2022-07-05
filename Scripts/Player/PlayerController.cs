@@ -8,6 +8,18 @@ namespace DiveRollPlatformer
         public Vector3 Velocity;
         public bool DoubleJumpArmed;
 
+        public float FSpeed;
+        public float HAngleDeg
+        {
+            get => RotationDegrees.y;
+            set
+            {
+                var rot = RotationDegrees;
+                rot.y = value;
+                RotationDegrees = rot;
+            }
+        }
+
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
 
@@ -54,6 +66,28 @@ namespace DiveRollPlatformer
 
             if (IsOnFloor())
                 LastGroundedTime = Time.PhysicsTime;
+        }
+
+        public void SyncVelocityToFSpeed()
+        {
+            float vspeed = Velocity.y;
+            Velocity = Transform.basis.z * FSpeed;
+            Velocity.y = vspeed;
+        }
+
+        public Vector3 GetLeftStickWorldSpace()
+        {
+            var camera = GetViewport().GetCamera();
+
+            float length = Input.LeftStick.Length();
+            float angle = Input.LeftStick.Angle();
+            angle += camera.Rotation.y;
+
+            return new Vector3(
+                -length * Mathf.Sin(angle),
+                0,
+                length * Mathf.Cos(angle)
+            );
         }
     }
 }

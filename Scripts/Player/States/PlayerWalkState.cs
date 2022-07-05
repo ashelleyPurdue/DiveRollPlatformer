@@ -1,3 +1,5 @@
+using Godot;
+
 namespace DiveRollPlatformer
 {
     public class PlayerWalkState : PlayerState
@@ -18,6 +20,11 @@ namespace DiveRollPlatformer
             // Jump with the jump button
             if (JumpButtonBuffered())
                 Jump();
+
+            RotateWithLeftStick();
+            AccelerateWithLeftStick();
+
+            Player.SyncVelocityToFSpeed();
         }
 
         public override void AfterMove(float deltaTime)
@@ -26,6 +33,29 @@ namespace DiveRollPlatformer
             {
                 Player.ChangeState(Player.FreeFallState);
             }
+        }
+
+        private void RotateWithLeftStick()
+        {
+            // Don't attempt to rotate if the left stick isn't being pushed
+            if (Player.Input.LeftStick.Length() < PlayerConstants.LEFT_STICK_DEADZONE)
+                return;
+
+            var leftStick3D = Player.GetLeftStickWorldSpace();
+            var leftStick2D = new Vector2(leftStick3D.x, leftStick3D.z);
+            float desiredHAngle = Mathf.Rad2Deg(leftStick2D.Angle());
+
+            Player.HAngleDeg = desiredHAngle;
+            // TODO: Gradually rotate if we're moving faster than the threshold
+        }
+
+        private void AccelerateWithLeftStick()
+        {
+            float stickMagnitude = Player.Input.LeftStick.Length();
+            float desiredSpeed = stickMagnitude * PlayerConstants.HSPEED_MAX_GROUND;
+
+            Player.FSpeed = desiredSpeed;
+            // TODO: Gradually accelerate instead of instantly
         }
 
         private void Jump()
