@@ -4,7 +4,7 @@ namespace DiveRollPlatformer
 {
     public class PlayerJumpCutoffState : PlayerAirbornStateBase
     {
-        protected override float Gravity => PlayerConstants.FREE_FALL_GRAVITY;
+        private float Gravity => PlayerConstants.FREE_FALL_GRAVITY;
 
         public override void BeforeMove(float deltaTime)
         {
@@ -19,7 +19,7 @@ namespace DiveRollPlatformer
             }
             else
             {
-                ApplyGravity(deltaTime);
+                ApplyGravity(Gravity, deltaTime);
             }
 
             // TODO: Air strafing

@@ -4,7 +4,7 @@ namespace DiveRollPlatformer
 {
     public class PlayerJumpState : PlayerAirbornStateBase
     {
-        protected override float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
+        private float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
         private const float MinDuration = PlayerConstants.STANDARD_JUMP_MIN_DURATION;
 
         private float _jumpStartTime;
@@ -21,7 +21,9 @@ namespace DiveRollPlatformer
         public override void BeforeMove(float deltaTime)
         {
             _jumpReleased = _jumpReleased || !Player.Input.JumpHeld;
-            base.BeforeMove(deltaTime);
+
+            ApplyGravity(Gravity, deltaTime);
+            // TODO: Air strafing
         }
 
         public override void AfterMove(float deltaTime)
