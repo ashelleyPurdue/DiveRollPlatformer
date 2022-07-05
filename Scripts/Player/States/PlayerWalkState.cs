@@ -16,17 +16,8 @@ namespace DiveRollPlatformer
                 Player.DoubleJumpArmed = false;
 
             // Jump with the jump button
-            if (Player.Input.JumpPressed)
-            {
-                if (!Player.DoubleJumpArmed)
-                {
-                    Player.ChangeState(Player.StandardJumpState);
-                }
-                else
-                {
-                    Player.ChangeState(Player.DoubleJumpState);
-                }
-            }
+            if (JumpButtonBuffered())
+                Jump();
         }
 
         public override void AfterMove(float deltaTime)
@@ -35,6 +26,24 @@ namespace DiveRollPlatformer
             {
                 Player.ChangeState(Player.FreeFallState);
             }
+        }
+
+        private void Jump()
+        {
+            if (!Player.DoubleJumpArmed)
+            {
+                Player.ChangeState(Player.StandardJumpState);
+            }
+            else
+            {
+                Player.ChangeState(Player.DoubleJumpState);
+            }
+        }
+
+        private bool JumpButtonBuffered()
+        {
+            float bufferExpiration = Player.LastJumpPressTime + PlayerConstants.EARLY_JUMP_TIME;
+            return Player.Time.PhysicsTime < bufferExpiration;
         }
     }
 }
