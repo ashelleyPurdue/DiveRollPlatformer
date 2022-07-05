@@ -4,6 +4,7 @@ namespace DiveRollPlatformer
 {
     public interface IInputService
     {
+        Vector2 LeftStick {get;}
         Vector2 RightStick {get;}
 
         bool JumpHeld {get;}
@@ -13,6 +14,13 @@ namespace DiveRollPlatformer
 
     public class InputService : IInputService
     {
+        public Vector2 LeftStick => Input.GetVector(
+            "LeftStickLeft",
+            "LeftStickRight",
+            "LeftStickDown",
+            "LeftStickUp"
+        );
+
         public Vector2 RightStick => Input.GetVector(
             "RightStickLeft",
             "RightStickRight",
