@@ -21,6 +21,7 @@ namespace DiveRollPlatformer
         public override void BeforeMove(float deltaTime)
         {
             _jumpReleased = _jumpReleased || !Player.Input.JumpHeld;
+            CutJumpShortIfReleased();
 
             ApplyGravity(Gravity, deltaTime);
             // TODO: Air strafing
@@ -39,13 +40,24 @@ namespace DiveRollPlatformer
                 Player.ChangeState(Player.FreeFallState);
                 return;
             }
+        }
 
-            // Cut the jump short if the button was released on the way up
-            if (_jumpReleased && IsPastMinDuration())
-            {
-                Player.ChangeState(Player.JumpCutoffState);
-                return;
-            }
+        private void CutJumpShortIfReleased()
+        {
+            // Cut the jump short if the button was released on the way up.
+            // Immediately setting the VSpeed to 0 looks jarring, so instead
+            // we'll exponentially decay it every frame.
+            // Once it's decayed below a certain threshold, we'll let gravity do
+            // the rest of the work so it still looks natural.
+            float decayCutoff = PlayerConstants.STANDARD_JUMP_VSPEED / 2;
+
+            bool shouldDecay =
+                _jumpReleased &&
+                IsPastMinDuration() &&
+                Player.Velocity.y > decayCutoff;
+
+            if (shouldDecay)
+                Player.Velocity.y *= PlayerConstants.SHORT_JUMP_DECAY_RATE;
         }
 
         private bool IsPastMinDuration()
