@@ -6,7 +6,7 @@ namespace DiveRollPlatformer
         {
             if (Player.Input.JumpPressed)
             {
-                Player.ChangeState(Player.JumpState);
+                Player.ChangeState(Player.StandardJumpState);
             }
         }
 

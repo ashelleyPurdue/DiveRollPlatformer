@@ -2,17 +2,18 @@ using Godot;
 
 namespace DiveRollPlatformer
 {
-    public class PlayerJumpState : PlayerAirbornStateBase
+    public abstract class PlayerJumpStateBase : PlayerAirbornStateBase
     {
-        private float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
-        private const float MinDuration = PlayerConstants.STANDARD_JUMP_MIN_DURATION;
+        protected abstract float JumpVelocity {get;}
+        protected abstract float Gravity {get;}
+        protected abstract float MinDuration {get;}
 
         private float _jumpStartTime;
         private bool _jumpReleased;
 
         public override void OnStateEnter()
         {
-            Player.Velocity.y = PlayerConstants.STANDARD_JUMP_VSPEED;
+            Player.Velocity.y = JumpVelocity;
 
             _jumpStartTime = Player.Time.PhysicsTime;
             _jumpReleased = false;
