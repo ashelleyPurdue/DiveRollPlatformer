@@ -14,15 +14,17 @@ namespace DiveRollPlatformer
         public readonly PlayerState JumpState = new PlayerJumpState();
         public readonly PlayerState JumpCutoffState = new PlayerJumpCutoffState();
 
-
         public IInputService Input {get; private set;}
+        public ITimeService Time {get; private set;}
 
         [Inject]
         public void InjectDependencies(
-            IInputService input
+            IInputService input,
+            ITimeService time
         )
         {
             Input = input;
+            Time = time;
         }
 
         public override void _Ready()
