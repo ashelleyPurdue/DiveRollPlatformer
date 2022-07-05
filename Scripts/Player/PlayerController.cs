@@ -24,10 +24,7 @@ namespace DiveRollPlatformer
         {
             Input = input;
             Time = time;
-        }
 
-        public override void _Ready()
-        {
             ChangeState(WalkState);
         }
 
