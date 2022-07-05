@@ -20,6 +20,8 @@ namespace DiveRollPlatformer
             }
         }
 
+        public Vector3 Forward => Transform.basis.z;
+
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
 
@@ -76,7 +78,7 @@ namespace DiveRollPlatformer
         public void SyncVelocityToFSpeed()
         {
             float vspeed = Velocity.y;
-            Velocity = Transform.basis.z * FSpeed;
+            Velocity = Forward * FSpeed;
             Velocity.y = vspeed;
         }
 
