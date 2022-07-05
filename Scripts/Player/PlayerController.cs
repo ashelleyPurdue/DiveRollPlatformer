@@ -6,6 +6,16 @@ namespace DiveRollPlatformer
     public class PlayerController : KinematicBody
     {
         public Vector3 Velocity;
+        public float HAngleDeg
+        {
+            get => RotationDegrees.y;
+            set
+            {
+                var rot = RotationDegrees;
+                rot.y = value;
+                RotationDegrees = rot;
+            }
+        }
         public bool DoubleJumpArmed;
 
         public float LastJumpPressTime {get; private set;} = float.MinValue;
