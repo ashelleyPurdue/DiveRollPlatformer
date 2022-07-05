@@ -8,6 +8,9 @@ namespace DiveRollPlatformer
         public Vector3 Velocity;
         public bool DoubleJumpArmed;
 
+        public float LastJumpPressTime {get; private set;} = float.MinValue;
+        public float LastGroundedTime {get; private set;} = float.MinValue;
+
         public PlayerState CurrentState {get; private set;} = null;
 
         public readonly PlayerState WalkState = new PlayerWalkState();
@@ -42,9 +45,15 @@ namespace DiveRollPlatformer
 
         public override void _PhysicsProcess(float delta)
         {
+            if (Input.JumpPressed)
+                LastJumpPressTime = Time.PhysicsTime;
+
             CurrentState.BeforeMove(delta);
             MoveAndSlide(Velocity, Vector3.Up);
             CurrentState.AfterMove(delta);
+
+            if (IsOnFloor())
+                LastGroundedTime = Time.PhysicsTime;
         }
     }
 }
