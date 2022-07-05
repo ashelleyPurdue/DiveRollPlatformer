@@ -65,5 +65,20 @@ namespace DiveRollPlatformer
             if (IsOnFloor())
                 LastGroundedTime = Time.PhysicsTime;
         }
+
+        public Vector3 GetLeftStickWorldSpace()
+        {
+            var camera = GetViewport().GetCamera();
+
+            float length = Input.LeftStick.Length();
+            float angle = Input.LeftStick.Angle();
+            angle += camera.Rotation.y;
+
+            return new Vector3(
+                -length * Mathf.Sin(angle),
+                0,
+                length * Mathf.Cos(angle)
+            );
+        }
     }
 }
