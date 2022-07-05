@@ -22,7 +22,9 @@ namespace DiveRollPlatformer
                 Jump();
 
             RotateWithLeftStick();
-            // TODO: Accelerate with the left stick
+            AccelerateWithLeftStick();
+
+            Player.SyncVelocityToFSpeed();
         }
 
         public override void AfterMove(float deltaTime)
@@ -45,6 +47,15 @@ namespace DiveRollPlatformer
 
             Player.HAngleDeg = desiredHAngle;
             // TODO: Gradually rotate if we're moving faster than the threshold
+        }
+
+        private void AccelerateWithLeftStick()
+        {
+            float stickMagnitude = Player.Input.LeftStick.Length();
+            float desiredSpeed = stickMagnitude * PlayerConstants.HSPEED_MAX_GROUND;
+
+            Player.FSpeed = desiredSpeed;
+            // TODO: Gradually accelerate instead of instantly
         }
 
         private void Jump()

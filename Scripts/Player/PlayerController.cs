@@ -6,6 +6,9 @@ namespace DiveRollPlatformer
     public class PlayerController : KinematicBody
     {
         public Vector3 Velocity;
+        public bool DoubleJumpArmed;
+
+        public float FSpeed;
         public float HAngleDeg
         {
             get => RotationDegrees.y;
@@ -16,7 +19,6 @@ namespace DiveRollPlatformer
                 RotationDegrees = rot;
             }
         }
-        public bool DoubleJumpArmed;
 
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
@@ -64,6 +66,13 @@ namespace DiveRollPlatformer
 
             if (IsOnFloor())
                 LastGroundedTime = Time.PhysicsTime;
+        }
+
+        public void SyncVelocityToFSpeed()
+        {
+            float vspeed = Velocity.y;
+            Velocity = Transform.basis.z * FSpeed;
+            Velocity.y = vspeed;
         }
 
         public Vector3 GetLeftStickWorldSpace()
