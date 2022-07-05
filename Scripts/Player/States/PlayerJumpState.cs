@@ -5,10 +5,23 @@ namespace DiveRollPlatformer
     public class PlayerJumpState : PlayerAirbornStateBase
     {
         protected override float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
+        private const float MinDuration = PlayerConstants.STANDARD_JUMP_MIN_DURATION;
+
+        private float _jumpStartTime;
+        private bool _jumpReleased;
 
         public override void OnStateEnter()
         {
             Player.Velocity.y = PlayerConstants.STANDARD_JUMP_VSPEED;
+
+            _jumpStartTime = Player.Time.PhysicsTime;
+            _jumpReleased = false;
+        }
+
+        public override void BeforeMove(float deltaTime)
+        {
+            _jumpReleased = _jumpReleased || !Player.Input.JumpHeld;
+            base.BeforeMove(deltaTime);
         }
 
         public override void AfterMove(float deltaTime)
@@ -26,11 +39,16 @@ namespace DiveRollPlatformer
             }
 
             // Cut the jump short if the button was released on the way up
-            if (!Player.Input.JumpHeld)
+            if (_jumpReleased && IsPastMinDuration())
             {
                 Player.ChangeState(Player.JumpCutoffState);
                 return;
             }
+        }
+
+        private bool IsPastMinDuration()
+        {
+            return (Player.Time.PhysicsTime - _jumpStartTime >= MinDuration);
         }
     }
 }
