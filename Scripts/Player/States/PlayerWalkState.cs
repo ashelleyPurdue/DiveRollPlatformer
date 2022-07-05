@@ -9,6 +9,7 @@ namespace DiveRollPlatformer
         public override void OnStateEnter()
         {
             _stateStartTime = Player.Time.PhysicsTime;
+            Player.Velocity.y = 0;
         }
 
         public override void BeforeMove(float deltaTime)
