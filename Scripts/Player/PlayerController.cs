@@ -11,16 +11,16 @@ namespace DiveRollPlatformer
         public float FSpeed;
         public float HAngleDeg
         {
-            get => RotationDegrees.y;
+            get => RotationDegrees.y + 90;
             set
             {
                 var rot = RotationDegrees;
-                rot.y = value;
+                rot.y = value - 90;
                 RotationDegrees = rot;
             }
         }
 
-        public Vector3 Forward => Transform.basis.z;
+        public Vector3 Forward => -Transform.basis.z;
 
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
@@ -91,16 +91,16 @@ namespace DiveRollPlatformer
             angle += camera.Rotation.y;
 
             return new Vector3(
-                -length * Mathf.Sin(angle),
+                length * Mathf.Cos(angle),
                 0,
-                length * Mathf.Cos(angle)
+                -length * Mathf.Sin(angle)
             );
         }
 
         public float GetHAngleDegInput()
         {
             var leftStick3D = GetLeftStickWorldSpace();
-            var leftStick2D = new Vector2(leftStick3D.x, leftStick3D.z);
+            var leftStick2D = new Vector2(leftStick3D.x, -leftStick3D.z);
 
             return Mathf.Rad2Deg(leftStick2D.Angle());
         }
