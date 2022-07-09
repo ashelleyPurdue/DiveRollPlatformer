@@ -18,6 +18,11 @@ namespace DiveRollPlatformer
         public override void _EnterTree()
         {
             _shownValuesLabel = GetNode<Label>(ShownValuesLabel);
+
+            // Update the shown values _after_ all other nodes have been
+            // processed.  This ensures that the displayed values are the
+            // absolute latest.
+            ProcessPriority = int.MaxValue;
         }
 
         public override void _Process(float delta)
