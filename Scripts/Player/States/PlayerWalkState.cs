@@ -20,7 +20,18 @@ namespace DiveRollPlatformer
 
             // Jump with the jump button
             if (JumpButtonBuffered())
+            {
                 Jump();
+                return;
+            }
+
+            // Dive with the dive button
+            if (Player.Input.DivePressed)
+            {
+                Player.ChangeState(Player.DiveState);
+                Player.DiveState.BeforeMove(deltaTime);
+                return;
+            }
 
             RotateWithLeftStick();
             AccelerateWithLeftStick();
