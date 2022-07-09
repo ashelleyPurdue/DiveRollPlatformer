@@ -72,7 +72,7 @@ namespace DiveRollPlatformer
             if (IsOnFloor())
                 LastGroundedTime = Time.PhysicsTime;
 
-            Debug.ShowValue("Position", Translation);
+            ShowDebugValues();
         }
 
         public void SyncVelocityToFSpeed()
@@ -103,6 +103,16 @@ namespace DiveRollPlatformer
             var leftStick2D = new Vector2(leftStick3D.x, -leftStick3D.z);
 
             return Mathf.Rad2Deg(leftStick2D.Angle());
+        }
+
+        private void ShowDebugValues()
+        {
+            Debug.ShowValue("Position", Translation);
+            Debug.ShowValue("Velocity", Velocity);
+            Debug.ShowValue("Left Stick", Input.LeftStick);
+            Debug.ShowValue("Left Stick(world)", GetLeftStickWorldSpace());
+            Debug.ShowValue("HAngleDeg", HAngleDeg);
+            Debug.ShowValue("HAngleDeg(input)", GetHAngleDegInput());
         }
     }
 }
