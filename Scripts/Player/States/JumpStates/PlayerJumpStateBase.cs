@@ -22,6 +22,16 @@ namespace DiveRollPlatformer
 
         public override void BeforeMove(float deltaTime)
         {
+            // Dive when the player presses the button.
+            // Putting this logic in BeforeMove() instead of AfterMove()
+            // reduces the perceived input delay by 1 physics frame.
+            if (Player.Input.DivePressed)
+            {
+                Player.ChangeState(Player.DiveState);
+                Player.DiveState.BeforeMove(deltaTime);
+                return;
+            }
+
             _jumpReleased = _jumpReleased || !Player.Input.JumpHeld;
             CutJumpShortIfReleased();
 
@@ -34,12 +44,6 @@ namespace DiveRollPlatformer
             if (Player.IsOnFloor())
             {
                 Player.ChangeState(Player.WalkState);
-                return;
-            }
-
-            if (Player.Input.DivePressed)
-            {
-                Player.ChangeState(Player.DiveState);
                 return;
             }
 
