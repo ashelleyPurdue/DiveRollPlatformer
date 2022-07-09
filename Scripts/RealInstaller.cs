@@ -9,10 +9,10 @@ namespace DiveRollPlatformer
         {
             Container.Register<IInputService, InputService>();
 
-            RegisterNode<ITimeService, TimeService>();
+            RegisterNodeSingleton<ITimeService, TimeService>();
         }
 
-        private void RegisterNode<TService, TNode>()
+        private void RegisterNodeSingleton<TService, TNode>()
             where TService : class
             where TNode : Godot.Node, TService, new()
         {
