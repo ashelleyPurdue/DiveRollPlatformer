@@ -37,6 +37,12 @@ namespace DiveRollPlatformer
                 return;
             }
 
+            if (Player.Input.DivePressed)
+            {
+                Player.ChangeState(Player.DiveState);
+                return;
+            }
+
             if (Player.Velocity.y <= 0)
             {
                 Player.ChangeState(Player.FreeFallState);

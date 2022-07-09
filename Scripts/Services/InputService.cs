@@ -10,6 +10,8 @@ namespace DiveRollPlatformer
         bool JumpHeld {get;}
         bool JumpPressed {get;}
         bool JumpReleased {get;}
+
+        bool DivePressed {get;}
     }
 
     public class InputService : IInputService
@@ -31,5 +33,7 @@ namespace DiveRollPlatformer
         public bool JumpHeld => Input.IsActionPressed("Jump");
         public bool JumpPressed => Input.IsActionJustPressed("Jump");
         public bool JumpReleased => Input.IsActionJustReleased("Jump");
+
+        public bool DivePressed => Input.IsActionJustPressed("Dive");
     }
 }

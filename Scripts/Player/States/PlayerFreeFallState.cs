@@ -19,6 +19,12 @@ namespace DiveRollPlatformer
                 Player.ChangeState(Player.WalkState);
                 return;
             }
+
+            if (Player.Input.DivePressed)
+            {
+                Player.ChangeState(Player.DiveState);
+                return;
+            }
         }
     }
 }
