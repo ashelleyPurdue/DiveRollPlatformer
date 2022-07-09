@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace DiveRollPlatformer
@@ -9,10 +10,34 @@ namespace DiveRollPlatformer
 
     public class DebugDisplay : Node, IDebugDisplay
     {
+        [Export] public NodePath ShownValuesLabel;
+        private Label _shownValuesLabel;
+
+        private Dictionary<string, object> _shownValues = new Dictionary<string, object>();
+
+        public override void _EnterTree()
+        {
+            _shownValuesLabel = GetNode<Label>(ShownValuesLabel);
+        }
+
+        public override void _Process(float delta)
+        {
+            UpdateShownValues();
+        }
+
         public void ShowValue(string name, object value)
         {
-            // TODO: Add this message to a panel
-            GD.Print($"{name}: {value}");
+            _shownValues[name] = value;
+        }
+
+        private void UpdateShownValues()
+        {
+            var builder = new System.Text.StringBuilder();
+
+            foreach (var kvp in _shownValues)
+                builder.AppendLine($"{kvp.Key}: {kvp.Value}");
+
+            _shownValuesLabel.Text = builder.ToString();
         }
     }
 }
