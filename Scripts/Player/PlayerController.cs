@@ -32,15 +32,18 @@ namespace DiveRollPlatformer
 
         public IInputService Input {get; private set;}
         public ITimeService Time {get; private set;}
+        public IDebugDisplay Debug {get; private set;}
 
         [Inject]
         public void InjectDependencies(
             IInputService input,
-            ITimeService time
+            ITimeService time,
+            IDebugDisplay debug
         )
         {
             Input = input;
             Time = time;
+            Debug = debug;
 
             ChangeState(WalkState);
         }
@@ -66,6 +69,8 @@ namespace DiveRollPlatformer
 
             if (IsOnFloor())
                 LastGroundedTime = Time.PhysicsTime;
+
+            Debug.ShowValue("Position", Translation);
         }
 
         public void SyncVelocityToFSpeed()

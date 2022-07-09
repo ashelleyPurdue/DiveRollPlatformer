@@ -4,14 +4,14 @@ namespace DiveRollPlatformer.DependencyInjection
 {
     public abstract class SiblingNodeInstaller : Node
     {
-        private SimpleInjector.Container _container;
+        protected SimpleInjector.Container Container;
         private bool _hasInjected = false;
 
         public override void _EnterTree()
         {
             base._EnterTree();
-            _container = new SimpleInjector.Container();
-            RegisterBindings(_container);
+            Container = new SimpleInjector.Container();
+            RegisterBindings();
 
             // We want InitializeSiblingNodes() to run _after_ all of the
             // siblings have been loaded into the scene, but _before_ any of
@@ -24,7 +24,7 @@ namespace DiveRollPlatformer.DependencyInjection
         public override void _PhysicsProcess(float delta) => InitializeSiblingNodes();
         public override void _Process(float delta) => InitializeSiblingNodes();
 
-        protected abstract void RegisterBindings(SimpleInjector.Container container);
+        protected abstract void RegisterBindings();
 
         private void InitializeSiblingNodes()
         {
@@ -32,7 +32,7 @@ namespace DiveRollPlatformer.DependencyInjection
                 return;
             _hasInjected = true;
 
-            Utils.InitializeNode(GetParent(), _container);
+            Utils.InitializeNode(GetParent(), Container);
         }
     }
 }
