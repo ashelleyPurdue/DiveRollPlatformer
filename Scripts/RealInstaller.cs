@@ -5,20 +5,20 @@ namespace DiveRollPlatformer
 {
     public class RealInstaller : SiblingNodeInstaller
     {
-        protected override void RegisterBindings(Container container)
+        protected override void RegisterBindings()
         {
-            container.Register<IInputService, InputService>();
+            Container.Register<IInputService, InputService>();
 
-            RegisterNode<ITimeService, TimeService>(container);
+            RegisterNode<ITimeService, TimeService>();
         }
 
-        private void RegisterNode<TService, TNode>(Container container)
+        private void RegisterNode<TService, TNode>()
             where TService : class
             where TNode : Godot.Node, TService, new()
         {
             var node = new TNode();
             AddChild(node);
-            container.RegisterInstance<TService>(node);
+            Container.RegisterInstance<TService>(node);
         }
     }
 }
