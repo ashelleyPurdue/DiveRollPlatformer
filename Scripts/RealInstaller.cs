@@ -12,6 +12,7 @@ namespace DiveRollPlatformer
             Container.Register<IInputService, InputService>();
 
             RegisterNodeSingleton<ITimeService, TimeService>();
+            RegisterSceneSingleton<IDebugDisplay>("res://Prefabs/DebugDisplay.tscn");
         }
 
         private void RegisterNodeSingleton<TService, TNode>()
