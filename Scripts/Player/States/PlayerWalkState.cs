@@ -42,10 +42,7 @@ namespace DiveRollPlatformer
             if (Player.Input.LeftStick.Length() < PlayerConstants.LEFT_STICK_DEADZONE)
                 return;
 
-            var leftStick3D = Player.GetLeftStickWorldSpace();
-            var leftStick2D = new Vector2(leftStick3D.x, leftStick3D.z);
-            float desiredHAngle = Mathf.Rad2Deg(leftStick2D.Angle());
-
+            float desiredHAngle = Player.GetHAngleDegInput();
             Player.HAngleDeg = desiredHAngle;
             // TODO: Gradually rotate if we're moving faster than the threshold
         }

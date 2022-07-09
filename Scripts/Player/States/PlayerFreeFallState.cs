@@ -9,7 +9,7 @@ namespace DiveRollPlatformer
         public override void BeforeMove(float deltaTime)
         {
             ApplyGravity(Gravity, deltaTime);
-            // TODO: Air strafing
+            AirStrafingControls(deltaTime);
         }
 
         public override void AfterMove(float deltaTime)

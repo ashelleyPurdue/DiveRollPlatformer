@@ -26,6 +26,6 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Eyes" type="MeshInstance" parent="."]
-transform = Transform( 0.325051, 0, 0, 0, 0.115776, 0, 0, 0, 0.236564, 0, 1.143, 0.383 )
+transform = Transform( 0.325051, 0, 0, 0, 0.115776, 0, 0, 0, 0.236564, 0, 1.143, -0.383 )
 mesh = SubResource( 3 )
 material/0 = null
