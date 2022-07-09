@@ -24,8 +24,8 @@ namespace DiveRollPlatformer
         private IInputService _input;
 
         // State variables
-        private float _hAngleDeg;
-        private float _vAngleDeg;
+        private float _hAngleDeg = -90;
+        private float _vAngleDeg = MAX_VANGLE_DEG;
         private float _zoomDistance = ORBIT_RADIUS;
 
         [Inject]
