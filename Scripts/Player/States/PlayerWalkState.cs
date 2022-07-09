@@ -20,7 +20,23 @@ namespace DiveRollPlatformer
 
             // Jump with the jump button
             if (JumpButtonBuffered())
-                Jump();
+            {
+                var targetState = Player.DoubleJumpArmed
+                    ? Player.DoubleJumpState
+                    : Player.StandardJumpState;
+
+                Player.ChangeState(targetState);
+                targetState.BeforeMove(deltaTime);
+                return;
+            }
+
+            // Dive with the dive button
+            if (Player.Input.DivePressed)
+            {
+                Player.ChangeState(Player.DiveState);
+                Player.DiveState.BeforeMove(deltaTime);
+                return;
+            }
 
             RotateWithLeftStick();
             AccelerateWithLeftStick();
@@ -54,18 +70,6 @@ namespace DiveRollPlatformer
 
             Player.FSpeed = desiredSpeed;
             // TODO: Gradually accelerate instead of instantly
-        }
-
-        private void Jump()
-        {
-            if (!Player.DoubleJumpArmed)
-            {
-                Player.ChangeState(Player.StandardJumpState);
-            }
-            else
-            {
-                Player.ChangeState(Player.DoubleJumpState);
-            }
         }
 
         private bool JumpButtonBuffered()

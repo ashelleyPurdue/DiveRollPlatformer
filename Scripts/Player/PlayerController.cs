@@ -32,6 +32,7 @@ namespace DiveRollPlatformer
         public readonly PlayerState FreeFallState = new PlayerFreeFallState();
         public readonly PlayerState StandardJumpState = new PlayerStandardJumpState();
         public readonly PlayerState DoubleJumpState = new PlayerDoubleJumpState();
+        public readonly PlayerState DiveState = new PlayerDiveState();
 
         public IInputService Input {get; private set;}
         public ITimeService Time {get; private set;}
@@ -97,6 +98,11 @@ namespace DiveRollPlatformer
                 0,
                 -length * Mathf.Sin(angle)
             );
+        }
+
+        public float LeftStickForwardComponent()
+        {
+            return GetLeftStickWorldSpace().ComponentAlong(Forward);
         }
 
         public float GetHAngleDegInput()
