@@ -11,6 +11,7 @@ namespace DiveRollPlatformer.DependencyInjection
         {
             base._EnterTree();
             Container = new SimpleInjector.Container();
+            Container.Options.ResolveUnregisteredConcreteTypes = true;
             Container.Options.PropertySelectionBehavior = new InjectPropertiesAttributePropertySelectionBehavior();
             RegisterBindings();
 
