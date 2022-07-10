@@ -39,9 +39,9 @@ namespace DiveRollPlatformer
         [ServiceGroup]
         public class PlayerServices
         {
-            public IInputService Input {get; set;}
-            public ITimeService Time {get; set;}
-            public IDebugDisplay Debug {get; set;}
+            public IInputService Input {get; private set;}
+            public ITimeService Time {get; private set;}
+            public IDebugDisplay Debug {get; private set;}
         }
         public PlayerServices Services {get; private set;}
 
