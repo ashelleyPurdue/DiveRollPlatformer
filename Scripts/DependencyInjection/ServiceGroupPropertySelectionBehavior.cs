@@ -6,7 +6,7 @@ using SimpleInjector.Advanced;
 
 namespace DiveRollPlatformer.DependencyInjection
 {
-    public class InjectPropertiesAttributePropertySelectionBehavior : IPropertySelectionBehavior
+    public class ServiceGroupPropertySelectionBehavior : IPropertySelectionBehavior
     {
         public bool SelectProperty(
             Type implementationType,
@@ -14,7 +14,7 @@ namespace DiveRollPlatformer.DependencyInjection
         )
         {
             return implementationType
-                .GetCustomAttributes<InjectPropertiesAttribute>()
+                .GetCustomAttributes<ServiceGroupAttribute>()
                 .Any();
         }
     }

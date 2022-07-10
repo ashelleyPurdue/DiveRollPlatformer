@@ -1,3 +1,6 @@
+using System;
+using System.Reflection;
+using System.Linq;
 using Godot;
 
 namespace DiveRollPlatformer.DependencyInjection
@@ -11,9 +14,9 @@ namespace DiveRollPlatformer.DependencyInjection
         {
             base._EnterTree();
             Container = new SimpleInjector.Container();
-            Container.Options.ResolveUnregisteredConcreteTypes = true;
-            Container.Options.PropertySelectionBehavior = new InjectPropertiesAttributePropertySelectionBehavior();
+            Container.Options.PropertySelectionBehavior = new ServiceGroupPropertySelectionBehavior();
             RegisterBindings();
+            RegisterServiceGroups();
 
             // We want InitializeSiblingNodes() to run _after_ all of the
             // siblings have been loaded into the scene, but _before_ any of
@@ -27,6 +30,19 @@ namespace DiveRollPlatformer.DependencyInjection
         public override void _Process(float delta) => InitializeSiblingNodes();
 
         protected abstract void RegisterBindings();
+
+        private void RegisterServiceGroups()
+        {
+            var serviceGroupClasses = GetType()
+                .Assembly
+                .GetTypes()
+                .Where(t => t.GetCustomAttributes<ServiceGroupAttribute>().Any());
+
+            foreach (var c in serviceGroupClasses)
+            {
+                Container.Register(c);
+            }
+        }
 
         private void InitializeSiblingNodes()
         {

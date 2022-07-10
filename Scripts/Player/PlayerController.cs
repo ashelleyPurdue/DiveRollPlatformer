@@ -36,7 +36,7 @@ namespace DiveRollPlatformer
         public bool DoubleJumpArmed;
         public Vector3 Forward => -Transform.basis.z;
 
-        [InjectProperties]
+        [ServiceGroup]
         public class PlayerServices
         {
             public IInputService Input {get; set;}
