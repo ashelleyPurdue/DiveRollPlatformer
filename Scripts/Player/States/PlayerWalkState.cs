@@ -18,7 +18,7 @@ namespace DiveRollPlatformer
         public override void BeforeMove(float deltaTime)
         {
             // Disarm the double-jump after spending too long on the ground
-            if (Player.Time.PhysicsTime >= _stateStartTime + PlayerConstants.DOUBLE_JUMP_TIME_WINDOW)
+            if (Player.Time.PhysicsTime >= _stateStartTime + PlayerConstants.DoubleJumpTimeWindow)
                 Player.DoubleJumpArmed = false;
 
             // Jump with the jump button
@@ -58,7 +58,7 @@ namespace DiveRollPlatformer
         private void RotateWithLeftStick()
         {
             // Don't attempt to rotate if the left stick isn't being pushed
-            if (Player.Input.LeftStick.Length() < PlayerConstants.LEFT_STICK_DEADZONE)
+            if (Player.Input.LeftStick.Length() < PlayerConstants.LeftStickDeadzone)
                 return;
 
             float desiredHAngle = Player.GetHAngleDegInput();
@@ -69,7 +69,7 @@ namespace DiveRollPlatformer
         private void AccelerateWithLeftStick()
         {
             float stickMagnitude = Player.Input.LeftStick.Length();
-            float desiredSpeed = stickMagnitude * PlayerConstants.HSPEED_MAX_GROUND;
+            float desiredSpeed = stickMagnitude * PlayerConstants.FSpeedMaxGround;
 
             Player.FSpeed = desiredSpeed;
             // TODO: Gradually accelerate instead of instantly
@@ -77,7 +77,7 @@ namespace DiveRollPlatformer
 
         private bool JumpButtonBuffered()
         {
-            float bufferExpiration = Player.LastJumpPressTime + PlayerConstants.EARLY_JUMP_TIME;
+            float bufferExpiration = Player.LastJumpPressTime + PlayerConstants.EarlyJumpTime;
             return Player.Time.PhysicsTime < bufferExpiration;
         }
     }

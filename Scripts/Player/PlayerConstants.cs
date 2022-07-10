@@ -1,143 +1,141 @@
-using Godot;
-
 namespace DiveRollPlatformer
 {
     public static class PlayerConstants
     {
-        public const float BODY_HEIGHT = 1.4558f;
-        public const float BODY_RADIUS = 0.375f;
+        public const float BodyHeight = 1.4558f;
+        public const float BodyRadius = 0.375f;
 
-        public const float SHORT_JUMP_DECAY_RATE = 0.7f;
+        public const float ShortJumpDecayRate = 0.7f;
 
         // These constants will determine the initial jump velocity
         // and rising/falling gravity strength
-        public const float STANDARD_JUMP_MAX_HEIGHT = 5;
-        public const float STANDARD_JUMP_MIN_DURATION = 0.05f;
-        public const float STANDARD_JUMP_FULL_RISE_TIME = 0.404f;
-        public const float STANDARD_JUMP_FULL_FALL_TIME = 0.328f;
+        public const float StandardJumpMaxHeight = 5;
+        public const float StandardJumpMinDuration = 0.05f;
+        public const float StandardJumpFullRiseTime = 0.404f;
+        public const float StandardJumpFullFallTime = 0.328f;
 
         // If you jump again shortly after you land, you'll do a "double jump."
         // Not the mid-air kind of double-jump, but the "3D Mario" kind.
-        public const float DOUBLE_JUMP_MAX_HEIGHT = 8;
-        public const float DOUBLE_JUMP_MIN_DURATION = 0.2f;
-        public const float DOUBLE_JUMP_HSPEED_BOOST = 2.4f;
-        public const float DOUBLE_JUMP_TIME_WINDOW = 0.1f;
+        public const float DoubleJumpMaxHeight = 8;
+        public const float DoubleJumpMinDuration = 0.2f;
+        public const float DoubleJumpFSpeedBoost = 2.4f;
+        public const float DoubleJumpTimeWindow = 0.1f;
 
         // Side flip constants
-        public const float SIDE_FLIP_MAX_HEIGHT = 7.76f;
-        public const float SIDE_FLIP_MIN_DURATION = 0.5f;
+        public const float SideFlipMaxHeight = 7.76f;
+        public const float SideFlipMinDuration = 0.5f;
 
-        public const float HSPEED_MIN = 2;
-        public const float HSPEED_MAX_GROUND = 8;
-        public const float HSPEED_MAX_AIR = 20;
+        public const float FSpeedMin = 2;
+        public const float FSpeedMaxGround = 8;
+        public const float FSpeedMaxAir = 20;
 
-        public const float TERMINAL_VELOCITY_AIR = -100;
-        public const float TERMINAL_VELOCITY_WALL_SLIDE = -10;
+        public const float TerminalVelocityAir = -100;
+        public const float TerminalVelocityWallSlide = -10;
 
-        public const float HACCEL_GROUND = 15;
-        public const float HACCEL_AIR = 30;
-        public const float MIN_LANDING_HSPEED_MULT = 0.25f;
-        public const float SKID_DURATION = 0.5f;
+        public const float FAccelGround = 15;
+        public const float FAccelAir = 30;
+        public const float MinLandingFSpeedMult = 0.25f;
+        public const float SkidDuration = 0.5f;
 
-        public const float BONK_SPEED = -3;
-        public const float LEDGE_GRAB_VSPEED = 11;
-        public const float LEDGE_GRAB_HSPEED = 4;
-        public const float LEDGE_GRAB_DURATION = 0.15f;
+        public const float BonkSpeed = -3;
+        public const float LedgeGrabVSpeed = 11;
+        public const float LedgeGrabFSpeed = 4;
+        public const float LedgeGrabDuration = 0.15f;
 
-        public const float DIVE_JUMP_HEIGHT = 4;
-        public const float DIVE_GRAVITY = 100;
-        public const float DIVE_HSPEED_INITIAL = 20;
-        public const float DIVE_HSPEED_FINAL_MAX = 10;
-        public const float DIVE_HSPEED_FINAL_MIN = 5f;
-        public const float DIVE_HSPEED_SLOW_TIME = 0.5f;
+        public const float DiveJumpHeight = 4;
+        public const float DiveGravity = 100;
+        public const float DiveFSpeedInitial = 20;
+        public const float DiveFSpeedFinalMax = 10;
+        public const float DiveFSpeedFinalMin = 5f;
+        public const float DiveFSpeedSlowTime = 0.5f;
 
-        public const float BONK_START_VSPEED = 10f;
-        public const float BONK_START_HSPEED = -5f;
-        public const float BONK_GRAVITY = 50;
-        public const float BONK_SLOW_TIME = 0.75f;
-        public const float BONK_DURATION = 0.3f;
-        public const float BONK_MAX_BOUNCE_COUNT = 1;
-        public const float BONK_BOUNCE_MULTIPLIER = 0.25f;
+        public const float BonkStartVSpeed = 10f;
+        public const float BonkStartFSpeed = -5f;
+        public const float BonkGravity = 50;
+        public const float BonkSlowTime = 0.75f;
+        public const float BonkDuration = 0.3f;
+        public const float BonkMaxBounceCount = 1;
+        public const float BonkBounceMultiplier = 0.25f;
 
-        public const float ROT_SPEED_DEG = 360 * 2;
-        public const float FRICTION_WALL_SLIDE = 10;
+        public const float RotSpeedDeg = 360 * 2;
+        public const float FrictionWallSlide = 10;
 
-        public const float COYOTE_TIME = 0.1f;      // Allows you to press the jump button a little "late" and still jump
-        public const float EARLY_JUMP_TIME = 0.1f;  // Allows you to press the jump button a little "early" and still jump
+        public const float CoyoteTime = 0.1f;      // Allows you to press the jump button a little "late" and still jump
+        public const float EarlyJumpTime = 0.1f;   // Allows you to press the jump button a little "early" and still jump
 
 
-        public const float WALL_JUMP_MIN_HSPEED = 10;
-        public const float WALL_JUMP_HSPEED_BOOST = 1;
-        public const float WALL_JUMP_HEIGHT = 5.5f;
-        public const float WALL_JUMP_MIN_HDIST = 1; // air strafing is disabled
+        public const float WallJumpMinFSpeed = 10;
+        public const float WallJumpFSpeedBoost = 1;
+        public const float WallJumpHeight = 5.5f;
+        public const float WallJumpMinFDist = 1;    // air strafing is disabled
                                                     // after a wall jump until
                                                     // the player has moved this
                                                     // far away from the wall.
 
-        public const float MAX_PIVOT_SPEED = 3f; // If you're below this speed, you can pivot on a dime.
+        public const float MaxPivotSpeed = 3f; // If you're below this speed, you can pivot on a dime.
 
-        public const float JUMP_REDIRECT_TIME = 0.1f;
+        public const float JumpRedirectTime = 0.1f;
 
-        public const float ROLL_TIME = 0.25f;
-        public const float ROLL_COOLDOWN = 0.5f;
-        public const float ROLL_DISTANCE = 5;
-        public const float ROLL_JUMP_HSPEED = 10;
-        public const float ROLL_ROT_SPEED_DEG = 180 / ROLL_TIME;
+        public const float RollTime = 0.25f;
+        public const float RollCooldown = 0.5f;
+        public const float RollDistance = 5;
+        public const float RollJumpFSpeed = 10;
+        public const float RollRotSpeedDeg = 180 / RollTime;
 
-        public const float LEFT_STICK_DEADZONE = 0.001f;
+        public const float LeftStickDeadzone = 0.001f;
 
-        public static readonly float STANDARD_JUMP_VSPEED;
-        public static readonly float DOUBLE_JUMP_VSPEED;
-        public static readonly float SIDE_FLIP_VSPEED;
-        public static readonly float DIVE_JUMP_VSPEED;
-        public static readonly float WALL_JUMP_VSPEED;
-        public static readonly float JUMP_RISE_GRAVITY;
-        public static readonly float FREE_FALL_GRAVITY;
-        public static float WALL_SLIDE_GRAVITY => JUMP_RISE_GRAVITY;
+        public static readonly float StandardJumpVSpeed;
+        public static readonly float DoubleJumpVSpeed;
+        public static readonly float SideFlipVSpeed;
+        public static readonly float DiveJumpVSpeed;
+        public static readonly float WallJumpVSpeed;
+        public static readonly float JumpRiseGravity;
+        public static readonly float FreeFallGravity;
+        public static float WallSlideGravity => JumpRiseGravity;
 
         // Using a constant instead of Engine.IterationsPerSecond so that this
         // class can be used in a static constructor.  This constant should
         // match the value configured in the Project Settings, or else the
         // computed gravity/vspeed values won't accurately result in the
         // specified jump height or rise/fall times.
-        public const float FIXED_TIMESTEP = 1 / 60f;
+        public const float FixedTimestep = 1 / 60f;
 
         static PlayerConstants()
         {
-            (STANDARD_JUMP_VSPEED, JUMP_RISE_GRAVITY) = AccelerationMath.InitialVelAndFrictionFor(
-                PlayerConstants.STANDARD_JUMP_MAX_HEIGHT,
-                PlayerConstants.STANDARD_JUMP_FULL_RISE_TIME,
-                PlayerConstants.FIXED_TIMESTEP
+            (StandardJumpVSpeed, JumpRiseGravity) = AccelerationMath.InitialVelAndFrictionFor(
+                PlayerConstants.StandardJumpMaxHeight,
+                PlayerConstants.StandardJumpFullRiseTime,
+                PlayerConstants.FixedTimestep
             );
 
-            FREE_FALL_GRAVITY = AccelerationMath.AccelerationForDistanceOverTime(
-                PlayerConstants.STANDARD_JUMP_MAX_HEIGHT,
-                PlayerConstants.STANDARD_JUMP_FULL_FALL_TIME,
-                PlayerConstants.FIXED_TIMESTEP
+            FreeFallGravity = AccelerationMath.AccelerationForDistanceOverTime(
+                PlayerConstants.StandardJumpMaxHeight,
+                PlayerConstants.StandardJumpFullFallTime,
+                PlayerConstants.FixedTimestep
             );
 
-            DOUBLE_JUMP_VSPEED = AccelerationMath.VelocityForDistanceWithFriction(
-                PlayerConstants.DOUBLE_JUMP_MAX_HEIGHT,
-                PlayerConstants.JUMP_RISE_GRAVITY,
-                PlayerConstants.FIXED_TIMESTEP
+            DoubleJumpVSpeed = AccelerationMath.VelocityForDistanceWithFriction(
+                PlayerConstants.DoubleJumpMaxHeight,
+                PlayerConstants.JumpRiseGravity,
+                PlayerConstants.FixedTimestep
             );
 
-            SIDE_FLIP_VSPEED = AccelerationMath.VelocityForDistanceWithFriction(
-                PlayerConstants.SIDE_FLIP_MAX_HEIGHT,
-                PlayerConstants.JUMP_RISE_GRAVITY,
-                PlayerConstants.FIXED_TIMESTEP
+            SideFlipVSpeed = AccelerationMath.VelocityForDistanceWithFriction(
+                PlayerConstants.SideFlipMaxHeight,
+                PlayerConstants.JumpRiseGravity,
+                PlayerConstants.FixedTimestep
             );
 
-            DIVE_JUMP_VSPEED = AccelerationMath.VelocityForDistanceWithFriction(
-                PlayerConstants.DIVE_JUMP_HEIGHT,
-                PlayerConstants.DIVE_GRAVITY,
-                PlayerConstants.FIXED_TIMESTEP
+            DiveJumpVSpeed = AccelerationMath.VelocityForDistanceWithFriction(
+                PlayerConstants.DiveJumpHeight,
+                PlayerConstants.DiveGravity,
+                PlayerConstants.FixedTimestep
             );
 
-            WALL_JUMP_VSPEED = AccelerationMath.VelocityForDistanceWithFriction(
-                PlayerConstants.WALL_JUMP_HEIGHT,
-                PlayerConstants.JUMP_RISE_GRAVITY,
-                PlayerConstants.FIXED_TIMESTEP
+            WallJumpVSpeed = AccelerationMath.VelocityForDistanceWithFriction(
+                PlayerConstants.WallJumpHeight,
+                PlayerConstants.JumpRiseGravity,
+                PlayerConstants.FixedTimestep
             );
         }
     }

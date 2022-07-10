@@ -9,14 +9,14 @@ namespace DiveRollPlatformer
             Player.DoubleJumpArmed = false;
 
             Player.HAngleDeg = Player.GetHAngleDegInput();
-            Player.FSpeed = PlayerConstants.DIVE_HSPEED_INITIAL;
-            Player.Velocity.y = PlayerConstants.DIVE_JUMP_VSPEED;
+            Player.FSpeed = PlayerConstants.DiveFSpeedInitial;
+            Player.Velocity.y = PlayerConstants.DiveJumpVSpeed;
         }
 
         public override void BeforeMove(float deltaTime)
         {
             FSpeedControls(deltaTime);
-            ApplyGravity(PlayerConstants.DIVE_GRAVITY, deltaTime);
+            ApplyGravity(PlayerConstants.DiveGravity, deltaTime);
         }
 
         public override void AfterMove(float deltaTime)
@@ -41,16 +41,16 @@ namespace DiveRollPlatformer
             // Reduce FSpeed until it's at the minimum
             // If the player is pushing backwards on the left stick, reduce the speed
             // faster and let them slow down more
-            float initSpeed = PlayerConstants.DIVE_HSPEED_INITIAL;
-            float finalSpeed = PlayerConstants.DIVE_HSPEED_FINAL_MAX;
-            float slowTime = PlayerConstants.DIVE_HSPEED_SLOW_TIME;
+            float initSpeed = PlayerConstants.DiveFSpeedInitial;
+            float finalSpeed = PlayerConstants.DiveFSpeedFinalMax;
+            float slowTime = PlayerConstants.DiveFSpeedSlowTime;
 
             float stickBackwardsComponent = -Player.LeftStickForwardComponent();
             if (stickBackwardsComponent > 0)
             {
                 finalSpeed = Mathf.Lerp(
-                    PlayerConstants.DIVE_HSPEED_FINAL_MAX,
-                    PlayerConstants.DIVE_HSPEED_FINAL_MIN,
+                    PlayerConstants.DiveFSpeedFinalMax,
+                    PlayerConstants.DiveFSpeedFinalMin,
                     stickBackwardsComponent
                 );
             }

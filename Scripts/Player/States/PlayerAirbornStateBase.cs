@@ -8,8 +8,8 @@ namespace DiveRollPlatformer
         {
             Player.Velocity.y -= gravity * deltaTime;
 
-            if (Player.Velocity.y < PlayerConstants.TERMINAL_VELOCITY_AIR)
-                Player.Velocity.y = PlayerConstants.TERMINAL_VELOCITY_AIR;
+            if (Player.Velocity.y < PlayerConstants.TerminalVelocityAir)
+                Player.Velocity.y = PlayerConstants.TerminalVelocityAir;
         }
 
         protected void AirStrafingControls(float deltaTime)
@@ -37,8 +37,8 @@ namespace DiveRollPlatformer
             // you try to change your direction.
             var inputVector = Player.GetLeftStickWorldSpace();
 
-            float accel = PlayerConstants.HACCEL_AIR;
-            float maxSpeed = PlayerConstants.HSPEED_MAX_AIR;
+            float accel = PlayerConstants.FAccelAir;
+            float maxSpeed = PlayerConstants.FSpeedMaxAir;
 
             // Apply a force to get our new velocity.
             var oldVelocity = Player.Velocity.Flattened();
@@ -50,15 +50,15 @@ namespace DiveRollPlatformer
             float oldSpeed = oldVelocity.Length();
             float newSpeed = newVelocity.Length();
 
-            bool wasAboveGroundSpeedLimit = oldSpeed > PlayerConstants.HSPEED_MAX_GROUND;
-            bool nowAboveGroundSpeedLimit = newSpeed > PlayerConstants.HSPEED_MAX_GROUND;
+            bool wasAboveGroundSpeedLimit = oldSpeed > PlayerConstants.FSpeedMaxGround;
+            bool nowAboveGroundSpeedLimit = newSpeed > PlayerConstants.FSpeedMaxGround;
 
             if (newSpeed > oldSpeed)
             {
                 if (wasAboveGroundSpeedLimit)
                     newSpeed = oldSpeed;
                 else if (nowAboveGroundSpeedLimit)
-                    newSpeed = PlayerConstants.HSPEED_MAX_GROUND;
+                    newSpeed = PlayerConstants.FSpeedMaxGround;
             }
 
             // We WILL, however, slow them down if they're going past the max
@@ -79,7 +79,7 @@ namespace DiveRollPlatformer
 
         private bool IsInJumpRedirectTimeWindow()
         {
-            float endTime = (Player.StateStartTime + PlayerConstants.JUMP_REDIRECT_TIME);
+            float endTime = (Player.StateStartTime + PlayerConstants.JumpRedirectTime);
             return Player.Time.PhysicsTime < endTime;
         }
     }

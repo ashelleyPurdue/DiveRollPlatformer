@@ -61,7 +61,7 @@ namespace DiveRollPlatformer
             // we'll exponentially decay it every frame.
             // Once it's decayed below a certain threshold, we'll let gravity do
             // the rest of the work so it still looks natural.
-            float decayCutoff = PlayerConstants.STANDARD_JUMP_VSPEED / 2;
+            float decayCutoff = PlayerConstants.StandardJumpVSpeed / 2;
 
             bool shouldDecay =
                 _jumpReleased &&
@@ -69,7 +69,7 @@ namespace DiveRollPlatformer
                 Player.Velocity.y > decayCutoff;
 
             if (shouldDecay)
-                Player.Velocity.y *= PlayerConstants.SHORT_JUMP_DECAY_RATE;
+                Player.Velocity.y *= PlayerConstants.ShortJumpDecayRate;
         }
 
         private bool IsPastMinDuration()

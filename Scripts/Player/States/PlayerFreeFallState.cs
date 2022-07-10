@@ -4,7 +4,7 @@ namespace DiveRollPlatformer
 {
     public class PlayerFreeFallState : PlayerAirbornStateBase
     {
-        private float Gravity => PlayerConstants.FREE_FALL_GRAVITY;
+        private float Gravity => PlayerConstants.FreeFallGravity;
 
         public override void BeforeMove(float deltaTime)
         {
