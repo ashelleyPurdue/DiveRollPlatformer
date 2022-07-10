@@ -27,8 +27,8 @@ namespace DiveRollPlatformer
             // reduces the perceived input delay by 1 physics frame.
             if (Player.Input.DivePressed)
             {
-                Player.ChangeState(Player.DiveState);
-                Player.DiveState.BeforeMove(deltaTime);
+                Player.ChangeState(Player.States.Dive);
+                Player.States.Dive.BeforeMove(deltaTime);
                 return;
             }
 
@@ -43,13 +43,13 @@ namespace DiveRollPlatformer
         {
             if (Player.IsOnFloor())
             {
-                Player.ChangeState(Player.WalkState);
+                Player.ChangeState(Player.States.Walk);
                 return;
             }
 
             if (Player.Velocity.y <= 0)
             {
-                Player.ChangeState(Player.FreeFallState);
+                Player.ChangeState(Player.States.FreeFall);
                 return;
             }
         }

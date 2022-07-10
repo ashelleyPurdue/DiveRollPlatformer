@@ -25,8 +25,8 @@ namespace DiveRollPlatformer
             if (JumpButtonBuffered())
             {
                 var targetState = Player.DoubleJumpArmed
-                    ? Player.DoubleJumpState
-                    : Player.StandardJumpState;
+                    ? Player.States.DoubleJump
+                    : Player.States.StandardJump;
 
                 Player.ChangeState(targetState);
                 targetState.BeforeMove(deltaTime);
@@ -36,8 +36,8 @@ namespace DiveRollPlatformer
             // Dive with the dive button
             if (Player.Input.DivePressed)
             {
-                Player.ChangeState(Player.DiveState);
-                Player.DiveState.BeforeMove(deltaTime);
+                Player.ChangeState(Player.States.Dive);
+                Player.States.Dive.BeforeMove(deltaTime);
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace DiveRollPlatformer
         {
             if (!Player.IsOnFloor())
             {
-                Player.ChangeState(Player.FreeFallState);
+                Player.ChangeState(Player.States.FreeFall);
             }
         }
 

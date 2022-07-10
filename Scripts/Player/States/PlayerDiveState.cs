@@ -24,14 +24,14 @@ namespace DiveRollPlatformer
             // TODO: Roll when we hit the ground, instead of walking
             if (Player.IsOnFloor())
             {
-                Player.ChangeState(Player.WalkState);
+                Player.ChangeState(Player.States.Walk);
                 return;
             }
 
             // TODO: Bonk if we hit a wall, instead of going into free-fall
             if (Player.IsOnWall())
             {
-                Player.ChangeState(Player.FreeFallState);
+                Player.ChangeState(Player.States.FreeFall);
                 return;
             }
         }
