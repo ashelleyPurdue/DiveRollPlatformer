@@ -69,7 +69,11 @@ namespace DiveRollPlatformer
                 LastJumpPressTime = Time.PhysicsTime;
 
             CurrentState.BeforeMove(delta);
-            MoveAndSlide(Velocity, Vector3.Up);
+            MoveAndSlide(
+                linearVelocity: Velocity,
+                upDirection: Vector3.Up,
+                stopOnSlope: true
+            );
             CurrentState.AfterMove(delta);
 
             if (IsOnFloor())
@@ -115,6 +119,7 @@ namespace DiveRollPlatformer
 
         private void ShowDebugValues()
         {
+            Debug.ShowValue("State", CurrentState.GetType().Name);
             Debug.ShowValue("Position", Translation);
             Debug.ShowValue("Velocity", Velocity);
             Debug.ShowValue("Left Stick", Input.LeftStick);
