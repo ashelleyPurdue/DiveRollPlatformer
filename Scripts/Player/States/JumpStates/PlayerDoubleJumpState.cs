@@ -2,9 +2,9 @@ namespace DiveRollPlatformer
 {
     public class PlayerDoubleJumpState : PlayerJumpStateBase
     {
-        protected override float JumpVelocity => PlayerConstants.DOUBLE_JUMP_VSPEED;
-        protected override float Gravity => PlayerConstants.JUMP_RISE_GRAVITY;
-        protected override float MinDuration => PlayerConstants.DOUBLE_JUMP_MIN_DURATION;
+        protected override float JumpVelocity => PlayerConstants.DoubleJumpVSpeed;
+        protected override float Gravity => PlayerConstants.JumpRiseGravity;
+        protected override float MinDuration => PlayerConstants.DoubleJumpMinDuration;
 
         public override void OnStateEnter()
         {

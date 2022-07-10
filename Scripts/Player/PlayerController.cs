@@ -5,9 +5,22 @@ namespace DiveRollPlatformer
 {
     public class PlayerController : KinematicBody
     {
-        public Vector3 Velocity;
-        public bool DoubleJumpArmed;
+        public PlayerState CurrentState {get; private set;} = null;
+        public readonly PlayerStateCollection States = new PlayerStateCollection();
+        public class PlayerStateCollection
+        {
+            public readonly PlayerState Walk = new PlayerWalkState();
+            public readonly PlayerState FreeFall = new PlayerFreeFallState();
+            public readonly PlayerState StandardJump = new PlayerStandardJumpState();
+            public readonly PlayerState DoubleJump = new PlayerDoubleJumpState();
+            public readonly PlayerState Dive = new PlayerDiveState();
+        }
 
+        public float StateStartTime {get; private set;}
+        public float LastJumpPressTime {get; private set;} = float.MinValue;
+        public float LastGroundedTime {get; private set;} = float.MinValue;
+
+        public Vector3 Velocity;
         public float FSpeed;
         public float HAngleDeg
         {
@@ -20,19 +33,9 @@ namespace DiveRollPlatformer
             }
         }
 
+        public bool DoubleJumpArmed;
+
         public Vector3 Forward => -Transform.basis.z;
-
-        public float LastJumpPressTime {get; private set;} = float.MinValue;
-        public float LastGroundedTime {get; private set;} = float.MinValue;
-        public float StateStartTime {get; private set;}
-
-        public PlayerState CurrentState {get; private set;} = null;
-
-        public readonly PlayerState WalkState = new PlayerWalkState();
-        public readonly PlayerState FreeFallState = new PlayerFreeFallState();
-        public readonly PlayerState StandardJumpState = new PlayerStandardJumpState();
-        public readonly PlayerState DoubleJumpState = new PlayerDoubleJumpState();
-        public readonly PlayerState DiveState = new PlayerDiveState();
 
         public IInputService Input {get; private set;}
         public ITimeService Time {get; private set;}
@@ -49,7 +52,7 @@ namespace DiveRollPlatformer
             Time = time;
             Debug = debug;
 
-            ChangeState(WalkState);
+            ChangeState(States.Walk);
         }
 
         public void ChangeState(PlayerState state)

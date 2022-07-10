@@ -27,8 +27,8 @@ namespace DiveRollPlatformer
             // reduces the perceived input delay by 1 physics frame.
             if (Player.Input.DivePressed)
             {
-                Player.ChangeState(Player.DiveState);
-                Player.DiveState.BeforeMove(deltaTime);
+                Player.ChangeState(Player.States.Dive);
+                Player.States.Dive.BeforeMove(deltaTime);
                 return;
             }
 
@@ -43,13 +43,13 @@ namespace DiveRollPlatformer
         {
             if (Player.IsOnFloor())
             {
-                Player.ChangeState(Player.WalkState);
+                Player.ChangeState(Player.States.Walk);
                 return;
             }
 
             if (Player.Velocity.y <= 0)
             {
-                Player.ChangeState(Player.FreeFallState);
+                Player.ChangeState(Player.States.FreeFall);
                 return;
             }
         }
@@ -61,7 +61,7 @@ namespace DiveRollPlatformer
             // we'll exponentially decay it every frame.
             // Once it's decayed below a certain threshold, we'll let gravity do
             // the rest of the work so it still looks natural.
-            float decayCutoff = PlayerConstants.STANDARD_JUMP_VSPEED / 2;
+            float decayCutoff = PlayerConstants.StandardJumpVSpeed / 2;
 
             bool shouldDecay =
                 _jumpReleased &&
@@ -69,7 +69,7 @@ namespace DiveRollPlatformer
                 Player.Velocity.y > decayCutoff;
 
             if (shouldDecay)
-                Player.Velocity.y *= PlayerConstants.SHORT_JUMP_DECAY_RATE;
+                Player.Velocity.y *= PlayerConstants.ShortJumpDecayRate;
         }
 
         private bool IsPastMinDuration()
