@@ -34,24 +34,21 @@ namespace DiveRollPlatformer
         }
 
         public bool DoubleJumpArmed;
-
         public Vector3 Forward => -Transform.basis.z;
 
-        public IInputService Input {get; private set;}
-        public ITimeService Time {get; private set;}
-        public IDebugDisplay Debug {get; private set;}
+        [InjectProperties]
+        public class PlayerServices
+        {
+            public IInputService Input {get; set;}
+            public ITimeService Time {get; set;}
+            public IDebugDisplay Debug {get; set;}
+        }
+        public PlayerServices Services {get; private set;}
 
         [Inject]
-        public void InjectDependencies(
-            IInputService input,
-            ITimeService time,
-            IDebugDisplay debug
-        )
+        public void InjectDependencies(PlayerServices services)
         {
-            Input = input;
-            Time = time;
-            Debug = debug;
-
+            Services = services;
             ChangeState(States.Walk);
         }
 
@@ -62,14 +59,14 @@ namespace DiveRollPlatformer
             CurrentState = state;
             CurrentState.Player = this;
 
-            StateStartTime = Time.PhysicsTime;
+            StateStartTime = Services.Time.PhysicsTime;
             CurrentState.OnStateEnter();
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (Input.JumpPressed)
-                LastJumpPressTime = Time.PhysicsTime;
+            if (Services.Input.JumpPressed)
+                LastJumpPressTime = Services.Time.PhysicsTime;
 
             CurrentState.BeforeMove(delta);
             MoveAndSlide(
@@ -80,7 +77,7 @@ namespace DiveRollPlatformer
             CurrentState.AfterMove(delta);
 
             if (IsOnFloor())
-                LastGroundedTime = Time.PhysicsTime;
+                LastGroundedTime = Services.Time.PhysicsTime;
 
             ShowDebugValues();
         }
@@ -96,8 +93,8 @@ namespace DiveRollPlatformer
         {
             var camera = GetViewport().GetCamera();
 
-            float length = Input.LeftStick.Length();
-            float angle = Input.LeftStick.Angle();
+            float length = Services.Input.LeftStick.Length();
+            float angle = Services.Input.LeftStick.Angle();
             angle += camera.Rotation.y;
 
             return new Vector3(
@@ -122,13 +119,13 @@ namespace DiveRollPlatformer
 
         private void ShowDebugValues()
         {
-            Debug.ShowValue("State", CurrentState.GetType().Name);
-            Debug.ShowValue("Position", Translation);
-            Debug.ShowValue("Velocity", Velocity);
-            Debug.ShowValue("Left Stick", Input.LeftStick);
-            Debug.ShowValue("Left Stick(world)", GetLeftStickWorldSpace());
-            Debug.ShowValue("HAngleDeg", HAngleDeg);
-            Debug.ShowValue("HAngleDeg(input)", GetHAngleDegInput());
+            Services.Debug.ShowValue("State", CurrentState.GetType().Name);
+            Services.Debug.ShowValue("Position", Translation);
+            Services.Debug.ShowValue("Velocity", Velocity);
+            Services.Debug.ShowValue("Left Stick", Services.Input.LeftStick);
+            Services.Debug.ShowValue("Left Stick(world)", GetLeftStickWorldSpace());
+            Services.Debug.ShowValue("HAngleDeg", HAngleDeg);
+            Services.Debug.ShowValue("HAngleDeg(input)", GetHAngleDegInput());
         }
     }
 }

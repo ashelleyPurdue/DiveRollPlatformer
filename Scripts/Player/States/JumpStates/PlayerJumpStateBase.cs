@@ -16,7 +16,7 @@ namespace DiveRollPlatformer
             Player.Velocity.y = JumpVelocity;
             Player.DoubleJumpArmed = true;
 
-            _jumpStartTime = Player.Time.PhysicsTime;
+            _jumpStartTime = Services.Time.PhysicsTime;
             _jumpReleased = false;
         }
 
@@ -25,14 +25,14 @@ namespace DiveRollPlatformer
             // Dive when the player presses the button.
             // Putting this logic in BeforeMove() instead of AfterMove()
             // reduces the perceived input delay by 1 physics frame.
-            if (Player.Input.DivePressed)
+            if (Services.Input.DivePressed)
             {
                 Player.ChangeState(Player.States.Dive);
                 Player.States.Dive.BeforeMove(deltaTime);
                 return;
             }
 
-            _jumpReleased = _jumpReleased || !Player.Input.JumpHeld;
+            _jumpReleased = _jumpReleased || !Services.Input.JumpHeld;
             CutJumpShortIfReleased();
 
             ApplyGravity(Gravity, deltaTime);
@@ -74,7 +74,7 @@ namespace DiveRollPlatformer
 
         private bool IsPastMinDuration()
         {
-            return (Player.Time.PhysicsTime - _jumpStartTime >= MinDuration);
+            return (Services.Time.PhysicsTime - _jumpStartTime >= MinDuration);
         }
     }
 }

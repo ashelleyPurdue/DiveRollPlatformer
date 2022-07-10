@@ -11,7 +11,7 @@ namespace DiveRollPlatformer
             // Dive when the player presses the button.
             // Putting this logic in BeforeMove() instead of AfterMove()
             // reduces the perceived input delay by 1 physics frame.
-            if (Player.Input.DivePressed)
+            if (Services.Input.DivePressed)
             {
                 Player.ChangeState(Player.States.Dive);
                 Player.States.Dive.BeforeMove(deltaTime);

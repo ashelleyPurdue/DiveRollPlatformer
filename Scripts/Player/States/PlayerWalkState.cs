@@ -8,7 +8,7 @@ namespace DiveRollPlatformer
 
         public override void OnStateEnter()
         {
-            _stateStartTime = Player.Time.PhysicsTime;
+            _stateStartTime = Services.Time.PhysicsTime;
 
             // Ensure we're always "pushing" into the ground, so IsOnFloor()
             // doesn't flicker.
@@ -18,7 +18,7 @@ namespace DiveRollPlatformer
         public override void BeforeMove(float deltaTime)
         {
             // Disarm the double-jump after spending too long on the ground
-            if (Player.Time.PhysicsTime >= _stateStartTime + PlayerConstants.DoubleJumpTimeWindow)
+            if (Services.Time.PhysicsTime >= _stateStartTime + PlayerConstants.DoubleJumpTimeWindow)
                 Player.DoubleJumpArmed = false;
 
             // Jump with the jump button
@@ -34,7 +34,7 @@ namespace DiveRollPlatformer
             }
 
             // Dive with the dive button
-            if (Player.Input.DivePressed)
+            if (Services.Input.DivePressed)
             {
                 Player.ChangeState(Player.States.Dive);
                 Player.States.Dive.BeforeMove(deltaTime);
@@ -58,7 +58,7 @@ namespace DiveRollPlatformer
         private void RotateWithLeftStick()
         {
             // Don't attempt to rotate if the left stick isn't being pushed
-            if (Player.Input.LeftStick.Length() < PlayerConstants.LeftStickDeadzone)
+            if (Services.Input.LeftStick.Length() < PlayerConstants.LeftStickDeadzone)
                 return;
 
             float desiredHAngle = Player.GetHAngleDegInput();
@@ -68,7 +68,7 @@ namespace DiveRollPlatformer
 
         private void AccelerateWithLeftStick()
         {
-            float stickMagnitude = Player.Input.LeftStick.Length();
+            float stickMagnitude = Services.Input.LeftStick.Length();
             float desiredSpeed = stickMagnitude * PlayerConstants.FSpeedMaxGround;
 
             Player.FSpeed = desiredSpeed;
@@ -78,7 +78,7 @@ namespace DiveRollPlatformer
         private bool JumpButtonBuffered()
         {
             float bufferExpiration = Player.LastJumpPressTime + PlayerConstants.EarlyJumpTime;
-            return Player.Time.PhysicsTime < bufferExpiration;
+            return Services.Time.PhysicsTime < bufferExpiration;
         }
     }
 }

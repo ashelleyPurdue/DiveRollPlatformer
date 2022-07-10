@@ -80,7 +80,7 @@ namespace DiveRollPlatformer
         private bool IsInJumpRedirectTimeWindow()
         {
             float endTime = (Player.StateStartTime + PlayerConstants.JumpRedirectTime);
-            return Player.Time.PhysicsTime < endTime;
+            return Services.Time.PhysicsTime < endTime;
         }
     }
 }
