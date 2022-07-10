@@ -9,7 +9,10 @@ namespace DiveRollPlatformer
         public override void OnStateEnter()
         {
             _stateStartTime = Player.Time.PhysicsTime;
-            Player.Velocity.y = 0;
+
+            // Ensure we're always "pushing" into the ground, so IsOnFloor()
+            // doesn't flicker.
+            Player.Velocity.y = -1;
         }
 
         public override void BeforeMove(float deltaTime)

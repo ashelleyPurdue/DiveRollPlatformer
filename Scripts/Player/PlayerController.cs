@@ -69,7 +69,11 @@ namespace DiveRollPlatformer
                 LastJumpPressTime = Time.PhysicsTime;
 
             CurrentState.BeforeMove(delta);
-            MoveAndSlide(Velocity, Vector3.Up);
+            MoveAndSlide(
+                linearVelocity: Velocity,
+                upDirection: Vector3.Up,
+                stopOnSlope: true
+            );
             CurrentState.AfterMove(delta);
 
             if (IsOnFloor())
