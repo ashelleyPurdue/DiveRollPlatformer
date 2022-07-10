@@ -115,6 +115,7 @@ namespace DiveRollPlatformer
 
         private void ShowDebugValues()
         {
+            Debug.ShowValue("State", CurrentState.GetType().Name);
             Debug.ShowValue("Position", Translation);
             Debug.ShowValue("Velocity", Velocity);
             Debug.ShowValue("Left Stick", Input.LeftStick);
