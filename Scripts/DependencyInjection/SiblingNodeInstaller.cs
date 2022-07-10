@@ -11,6 +11,7 @@ namespace DiveRollPlatformer.DependencyInjection
         {
             base._EnterTree();
             Container = new SimpleInjector.Container();
+            Container.Options.PropertySelectionBehavior = new InjectPropertiesAttributePropertySelectionBehavior();
             RegisterBindings();
 
             // We want InitializeSiblingNodes() to run _after_ all of the
