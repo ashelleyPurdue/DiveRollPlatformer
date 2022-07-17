@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Linq;
 using Godot;
 
-namespace DiveRollPlatformer.DependencyInjection
+namespace DependencyInjection
 {
     public static class Utils
     {

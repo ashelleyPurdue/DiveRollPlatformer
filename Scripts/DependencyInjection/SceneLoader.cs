@@ -2,7 +2,7 @@
 using System;
 using Godot;
 
-namespace DiveRollPlatformer.DependencyInjection
+namespace DependencyInjection
 {
     public interface ISceneLoader
     {
