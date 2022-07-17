@@ -1,5 +1,5 @@
 using Godot;
-using DiveRollPlatformer.DependencyInjection;
+using DependencyInjection;
 
 namespace DiveRollPlatformer
 {

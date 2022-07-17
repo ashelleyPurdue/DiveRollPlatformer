@@ -1,6 +1,7 @@
+using System;
 using Godot;
 
-namespace DiveRollPlatformer.DependencyInjection
+namespace DependencyInjection
 {
     public abstract class SiblingNodeInstaller : Node
     {
@@ -25,6 +26,34 @@ namespace DiveRollPlatformer.DependencyInjection
         public override void _Process(float delta) => InitializeSiblingNodes();
 
         protected abstract void RegisterBindings();
+
+        protected void RegisterNodeSingleton<TService, TNode>()
+            where TService : class
+            where TNode : Godot.Node, TService, new()
+        {
+            var node = new TNode();
+            AddChild(node);
+            Container.RegisterInstance<TService>(node);
+        }
+
+        protected void RegisterSceneSingleton<TService>(string scenePath)
+            where TService : class
+        {
+            Container.RegisterSingleton<TService>(Factory);
+
+            TService Factory()
+            {
+                var node = GD.Load<PackedScene>(scenePath).Instance();
+
+                if (!(node is TService s))
+                    throw new Exception($"The root node of {scenePath} does not implement {typeof(TService).Name}");
+
+                Utils.InitializeNode(node, Container);
+
+                AddChild(node);
+                return s;
+            }
+        }
 
         private void InitializeSiblingNodes()
         {

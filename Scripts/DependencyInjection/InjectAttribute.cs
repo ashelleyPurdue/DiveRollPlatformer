@@ -1,5 +1,5 @@
 using System;
-namespace DiveRollPlatformer.DependencyInjection
+namespace DependencyInjection
 {
     public class InjectAttribute : Attribute { }
 }
