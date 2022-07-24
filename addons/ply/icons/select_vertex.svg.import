@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3s0mdublb0qr"
+uid="uid://lll4e32g31aq"
 path="res://.godot/imported/select_vertex.svg-4b37c04732bfc1a62cc0c9fae7e19b91.ctex"
 metadata={
 "vram_texture": false
@@ -29,7 +29,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
-process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=4.0
