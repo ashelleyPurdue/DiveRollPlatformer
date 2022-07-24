@@ -1,28 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b18me6etbw6b0"]
 
-[ext_resource path="res://Scripts/Services/DebugDisplay.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://Scripts/Services/DebugDisplay.cs" id="1"]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource("1")
 ShownValuesLabel = NodePath("PanelContainer/ShownValuesLabel")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-margin_right = 14.0
-margin_bottom = 14.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ShownValuesLabel" type="Label" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 21.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_right = 1.0
+offset_bottom = 23.0
