@@ -1,16 +1,8 @@
-tool
+@tool
 extends EditorPlugin
 
 signal selection_changed(selection)
 
-"""
-██████╗ ██████╗ ███████╗██╗      ██████╗  █████╗ ██████╗ ███████╗
-██╔══██╗██╔══██╗██╔════╝██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝
-██████╔╝██████╔╝█████╗  ██║     ██║   ██║███████║██║  ██║███████╗
-██╔═══╝ ██╔══██╗██╔══╝  ██║     ██║   ██║██╔══██║██║  ██║╚════██║
-██║     ██║  ██║███████╗███████╗╚██████╔╝██║  ██║██████╔╝███████║
-╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝
-"""
 const Selector = preload("res://addons/ply/plugin/selector.gd")
 
 const SelectionMode = preload("res://addons/ply/utils/selection_mode.gd")
@@ -22,7 +14,7 @@ const Interop = preload("res://addons/ply/interop.gd")
 const PlyEditor = preload("res://addons/ply/nodes/ply.gd")
 
 
-func get_plugin_name():
+func _get_plugin_name() -> String:
 	return "Ply"
 
 
@@ -30,14 +22,14 @@ var selector: Selector
 var transform_gizmo: TransformGizmo
 var inspector: Inspector
 
-var toolbar = preload("res://addons/ply/gui/toolbar/toolbar.tscn").instance()
+var toolbar = preload("res://addons/ply/gui/toolbar/toolbar.tscn").instantiate()
 
 
 func _enter_tree() -> void:
 	Interop.register(self, "ply")
 	add_custom_type(
 		"PlyEditor",
-		"Node",
+		"Node3D",
 		preload("res://addons/ply/nodes/ply.gd"),
 		preload("res://addons/ply/icons/plugin.svg")
 	)
@@ -68,24 +60,24 @@ func _exit_tree() -> void:
 	Interop.deregister(self)
 
 
-func handles(o: Object):
+func _handles(o: Variant) -> bool:
 	return o is PlyEditor
 
 
-func clear():
-	print("clear")
+func _clear() -> void:
+	pass
 
 
-var selection  # nullable PlyEditor
+var selection	# nullable PlyEditor
 
 
-func edit(o: Object):
+func _edit(o: Variant) -> void:
 	assert(o is PlyEditor)
 	selection = o
 	emit_signal("selection_changed", selection)
 
 
-func make_visible(vis: bool):
+func _make_visible(vis: bool) -> void:
 	toolbar.visible = vis
 	if selection:
 		selection.selected = vis
@@ -97,7 +89,7 @@ func make_visible(vis: bool):
 var ignore_inputs = false
 
 
-func _interop_notification(caller_plugin_id: String, code: int, _id, _args):
+func _interop_notification(caller_plugin_id: String, code: int, _id, _args) -> void:
 	if caller_plugin_id == "gsr":
 		match code:
 			Interop.NOTIFY_CODE_WORK_STARTED:
@@ -106,14 +98,14 @@ func _interop_notification(caller_plugin_id: String, code: int, _id, _args):
 				ignore_inputs = false
 
 
-var last_camera: Camera
+var last_camera: Camera3D
 
 
-func forward_spatial_gui_input(camera: Camera, event: InputEvent):
+func _forward_3d_gui_input(camera: Camera3D, event: InputEvent):
 	last_camera = camera
 	return selector.handle_input(camera, event)
 
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if last_camera:
 		transform_gizmo.process()

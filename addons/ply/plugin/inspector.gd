@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorInspectorPlugin
 
 const PlyEditor = preload("res://addons/ply/nodes/ply.gd")
@@ -11,11 +11,11 @@ func _init(p):
 	plugin = p
 
 
-func can_handle(o: Object):
+func _can_handle(o: Variant) -> bool:
 	return o is PlyEditor
 
 
-func parse_begin(o: Object):
-	var inst = InspectorControl.instance()
+func _parse_begin(o: Object) -> void:
+	var inst = InspectorControl.instantiate()
 	inst.plugin = plugin
 	add_custom_control(inst)

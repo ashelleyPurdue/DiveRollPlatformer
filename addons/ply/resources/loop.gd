@@ -4,15 +4,14 @@ const Euler = preload("res://addons/ply/resources/euler.gd")
 
 
 # only works for quads, adjust offset to change direction
-static func get_face_loop(ply_mesh, f_idx, edge_offset = 0):
-	print("%s / %s" % [f_idx, edge_offset])
+static func get_face_loop(ply_mesh, f_idx, edge_offset = 0) -> Array:
 	var out = [f_idx]
 	var face_edges = ply_mesh.get_face_edges(f_idx)
 	if face_edges.size() != 4:
 		# not a quad
 		return [out, false]
 	var next_edge = face_edges[edge_offset]
-	var next = ply_mesh.edge_face(next_edge, Side.invert(ply_mesh.edge_side(next_edge, f_idx)))
+	var next = ply_mesh.edge_face(next_edge, Side.reverse(ply_mesh.edge_side(next_edge, f_idx)))
 	while next != f_idx:
 		face_edges = ply_mesh.get_face_edges_starting_at(
 			next_edge, ply_mesh.edge_side(next_edge, next)
@@ -21,14 +20,14 @@ static func get_face_loop(ply_mesh, f_idx, edge_offset = 0):
 			break
 		out.push_back(next)
 		next_edge = face_edges[2]
-		next = ply_mesh.edge_face(next_edge, Side.invert(ply_mesh.edge_side(next_edge, next)))
+		next = ply_mesh.edge_face(next_edge, Side.reverse(ply_mesh.edge_side(next_edge, next)))
 	if next == f_idx:
 		# full loop
 		return [out, true]
 	# other side
 	face_edges = ply_mesh.get_face_edges(f_idx)
 	next_edge = face_edges[(edge_offset + 2) % 4]
-	next = ply_mesh.edge_face(next_edge, Side.invert(ply_mesh.edge_side(next_edge, f_idx)))
+	next = ply_mesh.edge_face(next_edge, Side.reverse(ply_mesh.edge_side(next_edge, f_idx)))
 
 	# this could be either left or right, need to look at both edges, and see which ones point to the destination
 	while next != f_idx:
@@ -39,13 +38,13 @@ static func get_face_loop(ply_mesh, f_idx, edge_offset = 0):
 			break
 		out.push_back(next)
 		next_edge = face_edges[2]
-		next = ply_mesh.edge_face(next_edge, Side.invert(ply_mesh.edge_side(next_edge, next)))
+		next = ply_mesh.edge_face(next_edge, Side.reverse(ply_mesh.edge_side(next_edge, next)))
 
 	return [out, false]
 
 
 # only works for verts with 4 edges
-static func get_edge_loop(ply_mesh, e_idx):
+static func get_edge_loop(ply_mesh, e_idx) -> Array:
 	var out = []
 	var next_vtx = ply_mesh.edge_origin_idx(e_idx)
 	var next_edge = e_idx
@@ -64,7 +63,8 @@ static func get_edge_loop(ply_mesh, e_idx):
 		elif ply_mesh.edge_destination_idx(next_edge) == next_vtx:
 			next_vtx = ply_mesh.edge_origin_idx(next_edge)
 		else:
-			assert(false, "edge %s does not contain vertex %s" % [next_edge, next_vtx])
+			push_error("edge %s does not contain vertex %s" % [next_edge, next_vtx])
+			assert(false)
 
 	if not stopped and next_edge == e_idx:
 		# full loop
@@ -86,7 +86,8 @@ static func get_edge_loop(ply_mesh, e_idx):
 		elif ply_mesh.edge_destination_idx(next_edge) == next_vtx:
 			next_vtx = ply_mesh.edge_origin_idx(next_edge)
 		else:
-			assert(false, "edge %s does not contain vertex %s" % [next_edge, next_vtx])
+			push_error("edge %s does not contain vertex %s" % [next_edge, next_vtx])
+			assert(false)
 
 	return out
 
@@ -111,7 +112,7 @@ static func edge_cut(ply_mesh, e_idx, undo_redo = null):
 		if curr_edge == e_idx:
 			full_loop = true
 			break
-		curr_side = Side.invert(ply_mesh.edge_side(curr_edge, f))
+		curr_side = Side.reverse(ply_mesh.edge_side(curr_edge, f))
 	if !full_loop:
 		curr_edge = e_idx
 		curr_side = Side.RIGHT
@@ -127,7 +128,7 @@ static func edge_cut(ply_mesh, e_idx, undo_redo = null):
 			if curr_edge == e_idx:
 				full_loop = true
 				break
-			curr_side = Side.invert(ply_mesh.edge_side(curr_edge, f))
+			curr_side = Side.reverse(ply_mesh.edge_side(curr_edge, f))
 
 	var pre_edit = null
 	if undo_redo:
