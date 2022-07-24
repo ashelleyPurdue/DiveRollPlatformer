@@ -3,11 +3,11 @@ using DependencyInjection;
 
 namespace DiveRollPlatformer
 {
-    public class OrbitCamera : Spatial
+    public partial class OrbitCamera : Node3D
     {
         // Inspector parameters
         [Export] public NodePath TargetPath;
-        private Spatial _target;
+        private Node3D _target;
 
         // Constants
         private const bool INVERT_HORIZONTAL = true;
@@ -36,7 +36,7 @@ namespace DiveRollPlatformer
 
         public override void _Ready()
         {
-            _target = GetNode<Spatial>(TargetPath);
+            _target = GetNode<Node3D>(TargetPath);
         }
 
         public override void _Process(float deltaTime)

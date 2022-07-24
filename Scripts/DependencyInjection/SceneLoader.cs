@@ -24,7 +24,7 @@ namespace DependencyInjection
 
         public TNode Instantiate<TNode>(string path) where TNode : Node
         {
-            var node = (TNode)GD.Load<PackedScene>(path).Instance();
+            var node = GD.Load<PackedScene>(path).Instantiate<TNode>();
             Utils.InitializeNode(node, _services);
 
             return node;

@@ -5,7 +5,7 @@ using DependencyInjection;
 
 namespace DiveRollPlatformer
 {
-    public class RealInstaller : SiblingNodeInstaller
+    public partial class RealInstaller : SiblingNodeInstaller
     {
         protected override void RegisterBindings()
         {

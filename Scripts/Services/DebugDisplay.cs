@@ -8,7 +8,7 @@ namespace DiveRollPlatformer
         void ShowValue(string name, object value);
     }
 
-    public class DebugDisplay : Node, IDebugDisplay
+    public partial class DebugDisplay : Node, IDebugDisplay
     {
         [Export] public NodePath ShownValuesLabel;
         private Label _shownValuesLabel;

@@ -3,7 +3,7 @@ using DependencyInjection;
 
 namespace DiveRollPlatformer
 {
-    public class PlayerController : KinematicBody
+    public partial class PlayerController : CharacterBody3D
     {
         public PlayerState CurrentState {get; private set;} = null;
         public readonly PlayerStateCollection States = new PlayerStateCollection();
@@ -20,16 +20,16 @@ namespace DiveRollPlatformer
         public float LastJumpPressTime {get; private set;} = float.MinValue;
         public float LastGroundedTime {get; private set;} = float.MinValue;
 
-        public Vector3 Velocity;
+        public new Vector3 Velocity;
         public float FSpeed;
         public float HAngleDeg
         {
-            get => RotationDegrees.y + 90;
+            get => Mathf.Rad2Deg(GlobalRotation.y) + 90;
             set
             {
-                var rot = RotationDegrees;
-                rot.y = value - 90;
-                RotationDegrees = rot;
+                var rot = GlobalRotation;
+                rot.y = Mathf.Deg2Rad(value - 90);
+                GlobalRotation = rot;
             }
         }
 
@@ -72,11 +72,10 @@ namespace DiveRollPlatformer
                 LastJumpPressTime = Time.PhysicsTime;
 
             CurrentState.BeforeMove(delta);
-            MoveAndSlide(
-                linearVelocity: Velocity,
-                upDirection: Vector3.Up,
-                stopOnSlope: true
-            );
+
+            base.Velocity = Velocity;
+            MoveAndSlide();
+
             CurrentState.AfterMove(delta);
 
             if (IsOnFloor())
@@ -94,7 +93,7 @@ namespace DiveRollPlatformer
 
         public Vector3 GetLeftStickWorldSpace()
         {
-            var camera = GetViewport().GetCamera();
+            var camera = GetViewport().GetCamera3d();
 
             float length = Input.LeftStick.Length();
             float angle = Input.LeftStick.Angle();
@@ -123,7 +122,7 @@ namespace DiveRollPlatformer
         private void ShowDebugValues()
         {
             Debug.ShowValue("State", CurrentState.GetType().Name);
-            Debug.ShowValue("Position", Translation);
+            Debug.ShowValue("Position", GlobalPosition);
             Debug.ShowValue("Velocity", Velocity);
             Debug.ShowValue("Left Stick", Input.LeftStick);
             Debug.ShowValue("Left Stick(world)", GetLeftStickWorldSpace());
