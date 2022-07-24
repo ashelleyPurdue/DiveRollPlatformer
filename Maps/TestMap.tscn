@@ -39,3 +39,7 @@ mesh = SubResource("1")
 
 [node name="CollisionShape" type="CollisionShape3D" parent="MeshInstance/StaticBody"]
 shape = SubResource("3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.974679, 0, 0.223607, 0.182913, 0.575205, 0.797297, -0.12862, 0.818009, -0.560641, 0, 0, 5.20204)
+shadow_enabled = true
