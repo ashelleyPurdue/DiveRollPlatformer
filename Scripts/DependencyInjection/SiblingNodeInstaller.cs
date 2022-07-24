@@ -3,7 +3,7 @@ using Godot;
 
 namespace DependencyInjection
 {
-    public abstract class SiblingNodeInstaller : Node
+    public abstract partial class SiblingNodeInstaller : Node
     {
         protected SimpleInjector.Container Container;
         private bool _hasInjected = false;
@@ -43,7 +43,7 @@ namespace DependencyInjection
 
             TService Factory()
             {
-                var node = GD.Load<PackedScene>(scenePath).Instance();
+                var node = GD.Load<PackedScene>(scenePath).Instantiate<Node>();
 
                 if (!(node is TService s))
                     throw new Exception($"The root node of {scenePath} does not implement {typeof(TService).Name}");

@@ -8,7 +8,7 @@ namespace DiveRollPlatformer
         float PhysicsTime {get;}
     }
 
-    public class TimeService : Node, ITimeService
+    public partial class TimeService : Node, ITimeService
     {
         public float Time {get; private set;}
         public float PhysicsTime {get; private set;}
