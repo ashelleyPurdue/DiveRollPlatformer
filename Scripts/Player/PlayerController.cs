@@ -24,11 +24,11 @@ namespace DiveRollPlatformer
         public float FSpeed;
         public float HAngleDeg
         {
-            get => GlobalPosition.y + 90;
+            get => Mathf.Rad2Deg(GlobalRotation.y) + 90;
             set
             {
                 var rot = GlobalRotation;
-                rot.y = value - 90;
+                rot.y = Mathf.Deg2Rad(value - 90);
                 GlobalRotation = rot;
             }
         }
